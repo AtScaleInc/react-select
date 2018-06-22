@@ -844,6 +844,8 @@ var Select$1 = function (_React$Component) {
 		key: 'componentWillUnmount',
 		value: function componentWillUnmount() {
 			this.toggleTouchOutsideEvent(false);
+			this.toggleClickOutsideEvent(false);
+			this.togglePortalEvents(false);
 		}
 	}, {
 		key: 'togglePortalEvents',

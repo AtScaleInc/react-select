@@ -224,6 +224,8 @@ class Select extends React.Component {
 
 	componentWillUnmount () {
 		this.toggleTouchOutsideEvent(false);
+		this.toggleClickOutsideEvent(false);
+		this.togglePortalEvents(false);
 	}
 
 	togglePortalEvents(isOpen) {
@@ -1306,7 +1308,7 @@ Select.propTypes = {
 	matchProp: PropTypes.string,          // (any|label|value) which option property to filter on
 	menuBuffer: PropTypes.number,         // optional buffer (in px) between the bottom of the viewport and the bottom of the menu
 	menuContainerStyle: PropTypes.object, // optional style to apply to the menu container
-	menuPortalTarget: PropTypes.instanceOf(Element),// element to use for portal 
+	menuPortalTarget: PropTypes.element,  // element to use for portal 
 	menuRenderer: PropTypes.func,         // renders a custom menu with options
 	menuStyle: PropTypes.object,          // optional style to apply to the menu
 	multi: PropTypes.bool,                // multi-value input
