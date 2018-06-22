@@ -744,44 +744,6 @@ var Select$1 = function (_React$Component) {
 			}
 		}
 	}, {
-		key: 'togglePortalEvents',
-		value: function togglePortalEvents(isOpen) {
-			if (isOpen) {
-				console.log('portal events on');
-				this.updateMenuPortalPosition();
-				window.addEventListener('resize', this.updateMenuPortalPosition);
-				window.addEventListener('scroll', this.updateMenuPortalPosition);
-				document.addEventListener('wheel', this.updateMenuPortalPosition);
-			} else {
-				console.log('portal events off');
-				window.removeEventListener('resize', this.updateMenuPortalPosition);
-				window.removeEventListener('scroll', this.updateMenuPortalPosition);
-				document.removeEventListener('wheel', this.updateMenuPortalPosition);
-			}
-		}
-	}, {
-		key: 'updateMenuPortalPosition',
-		value: function updateMenuPortalPosition(e) {
-			var _window = window,
-			    windowWidth = _window.innerWidth,
-			    windowHeight = _window.innerHeight;
-
-			var _control$getBoundingC = this.control.getBoundingClientRect(),
-			    controlX = _control$getBoundingC.left,
-			    controlY = _control$getBoundingC.top,
-			    controlWidth = _control$getBoundingC.width,
-			    controlHeight = _control$getBoundingC.height;
-
-			this.setState({
-				controlX: controlX,
-				controlY: controlY,
-				controlWidth: controlWidth,
-				controlHeight: controlHeight,
-				windowWidth: windowWidth,
-				windowHeight: windowHeight
-			});
-		}
-	}, {
 		key: 'componentDidMount',
 		value: function componentDidMount() {
 			if (typeof this.props.autofocus !== 'undefined' && typeof console !== 'undefined') {
@@ -867,7 +829,7 @@ var Select$1 = function (_React$Component) {
 						    menuWidth = _menuContainer$getBou.width,
 						    menuHeight = _menuContainer$getBou.height;
 
-						this.setState({
+						this.setState({ // eslint-disable-line react/no-did-update-set-state
 							menuWidth: menuWidth,
 							menuHeight: menuHeight
 						});
@@ -884,6 +846,42 @@ var Select$1 = function (_React$Component) {
 			this.toggleTouchOutsideEvent(false);
 		}
 	}, {
+		key: 'togglePortalEvents',
+		value: function togglePortalEvents(isOpen) {
+			if (isOpen) {
+				this.updateMenuPortalPosition();
+				window.addEventListener('resize', this.updateMenuPortalPosition);
+				window.addEventListener('scroll', this.updateMenuPortalPosition);
+				document.addEventListener('wheel', this.updateMenuPortalPosition);
+			} else {
+				window.removeEventListener('resize', this.updateMenuPortalPosition);
+				window.removeEventListener('scroll', this.updateMenuPortalPosition);
+				document.removeEventListener('wheel', this.updateMenuPortalPosition);
+			}
+		}
+	}, {
+		key: 'updateMenuPortalPosition',
+		value: function updateMenuPortalPosition(e) {
+			var _window = window,
+			    windowWidth = _window.innerWidth,
+			    windowHeight = _window.innerHeight;
+
+			var _control$getBoundingC = this.control.getBoundingClientRect(),
+			    controlX = _control$getBoundingC.left,
+			    controlY = _control$getBoundingC.top,
+			    controlWidth = _control$getBoundingC.width,
+			    controlHeight = _control$getBoundingC.height;
+
+			this.setState({
+				controlX: controlX,
+				controlY: controlY,
+				controlWidth: controlWidth,
+				controlHeight: controlHeight,
+				windowWidth: windowWidth,
+				windowHeight: windowHeight
+			});
+		}
+	}, {
 		key: 'handleClickOutside',
 		value: function handleClickOutside(event) {
 			if (event.which !== 1 && this.wrapper && !this.wrapper.contains(event.target)) {
@@ -894,10 +892,8 @@ var Select$1 = function (_React$Component) {
 		key: 'toggleClickOutsideEvent',
 		value: function toggleClickOutsideEvent(enabled) {
 			if (enabled) {
-				console.log('outside click on');
 				document.addEventListener('mousedown', this.handleClickOutside);
 			} else {
-				console.log('outside click off');
 				document.removeEventListener('mousedown', this.handleClickOutside);
 			}
 		}
@@ -2051,6 +2047,7 @@ Select$1.propTypes = {
 	matchProp: PropTypes.string, // (any|label|value) which option property to filter on
 	menuBuffer: PropTypes.number, // optional buffer (in px) between the bottom of the viewport and the bottom of the menu
 	menuContainerStyle: PropTypes.object, // optional style to apply to the menu container
+	menuPortalTarget: PropTypes.instanceOf(Element), // element to use for portal 
 	menuRenderer: PropTypes.func, // renders a custom menu with options
 	menuStyle: PropTypes.object, // optional style to apply to the menu
 	multi: PropTypes.bool, // multi-value input
@@ -2076,7 +2073,6 @@ Select$1.propTypes = {
 	options: PropTypes.array, // array of options
 	pageSize: PropTypes.number, // number of entries to page when using page up/down keys
 	placeholder: stringOrNode, // field placeholder, displayed when there's no value
-	menuPortalTarget: PropTypes.instanceOf(Element), // element to use for portal 
 	removeSelected: PropTypes.bool, // whether the selected option is removed from the dropdown on multi selects
 	required: PropTypes.bool, // applies HTML5 required attribute when needed
 	resetValue: PropTypes.any, // value to use when you clear the control
