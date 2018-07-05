@@ -480,3 +480,7 @@ Thanks to the projects this was inspired by: [Selectize](http://selectize.github
 # License
 
 MIT Licensed. Copyright (c) Jed Watson 2018.
+
+## Publish as npm package
+
+Publish is done on every push to master by this Jenkins job: `Npm-publish-react-select`.
